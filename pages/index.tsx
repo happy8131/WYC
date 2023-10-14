@@ -1,8 +1,11 @@
 import Animation from "../components/home/animation";
 import Link from "next/link";
 import Layout from "../components/layout";
+import { auth } from "../firebase";
 
 export default function Home() {
+  const user = auth.currentUser;
+  console.log(user);
   return (
     <Layout>
       {" "}
