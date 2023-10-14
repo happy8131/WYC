@@ -12,7 +12,7 @@ const Header = () => {
     }
     router.push("/");
   };
-  console.log(user?.email);
+  console.log(user);
   return (
     <div>
       <header className="text-gray-600 body-font">
