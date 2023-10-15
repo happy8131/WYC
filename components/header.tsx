@@ -12,7 +12,7 @@ const Header = () => {
     }
     router.push("/");
   };
-  console.log(user);
+
   return (
     <div>
       <header className="text-gray-600 body-font">
@@ -38,7 +38,7 @@ const Header = () => {
             <Link href="/">
               <a className="mr-5 hover:text-gray-900">홈</a>
             </Link>
-            <Link href="/project">
+            <Link href="/campingList">
               <a className="mr-5 hover:text-gray-900">게시글</a>
             </Link>
             {user && (

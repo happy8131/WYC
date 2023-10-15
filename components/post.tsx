@@ -6,6 +6,7 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import { auth, db, storage } from "../firebase";
@@ -75,11 +76,12 @@ export default function Tweet({
   title,
   description,
   userId,
+  uuid,
   id,
 }: IPost) {
   const user = auth.currentUser;
   const [photoEdit, setPhotoEdit] = useState(photo);
-
+  const router = useRouter();
   const onDelete = async () => {
     const ok = confirm("정말 게시글을 삭제 하시겠습니까?");
 
@@ -119,6 +121,7 @@ export default function Tweet({
 
   return (
     <div
+      onClick={() => router.push(`/detail/${uuid}`)}
       className="flex flex-col m-3 rounded-xl w-full
     transition duration-300 transform border border-gray-300
     hover:scale-105
