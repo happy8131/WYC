@@ -118,13 +118,22 @@ export default function Tweet({
   };
 
   return (
-    <div className="flex flex-col m-3 rounded-xl w-[200px] min-h-screen">
+    <div
+      className="flex flex-col m-3 rounded-xl w-full
+    transition duration-300 transform border border-gray-300
+    hover:scale-105
+    hover:shadow-lg
+    dark:border-gray-200/50
+    dark:hover:shadow-gray-400/40
+    hover:text-blue-600"
+    >
       <Image
         className="rounded-xl"
         src={photo as any}
-        alt="cover image"
+        alt="cover"
         width="100%"
         height="60%"
+        layout="responsive"
         objectFit="cover"
         quality={100}
       />

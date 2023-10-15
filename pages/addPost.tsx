@@ -49,7 +49,7 @@ const TitleContainer = styled.section`
   }
 `;
 
-const HLine = styled.div`
+export const HLine = styled.div`
   display: block;
   margin-bottom: 50px;
 
@@ -163,48 +163,46 @@ const PostAdd = () => {
   };
 
   return (
-    <Layout>
-      <form
-        onSubmit={onSubmit}
-        className="flex flex-col  items-center text-center min-h-screen"
-      >
-        <h1 className="mt-10 font-bold text-[30px]">게시글 작성</h1>
-        <HLine />
-        <TitleContainer>
-          <input
-            type="text"
-            name="title"
-            className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg mb-5"
-            placeholder="제목"
-            required
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </TitleContainer>
-        <div className="w-[200px] flex justify-center items-center border rounded">
-          {imageSrc && <img src={imageSrc} alt="img" />}
-        </div>
-        <AttachFileButton htmlFor="file">
-          {file ? "사진 추가 완료!" : "사진 추가(1MB이하)"}
-        </AttachFileButton>
+    <form
+      onSubmit={onSubmit}
+      className="flex flex-col  items-center text-center min-h-screen"
+    >
+      <h1 className="mt-10 font-bold text-[30px]">게시글 작성</h1>
+      <HLine />
+      <TitleContainer>
         <input
-          id="file"
-          type="file"
-          className="hidden"
-          onChange={encodeFileToBase64}
-          accept="image/*"
+          type="text"
+          name="title"
+          className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg mb-5"
+          placeholder="제목"
           required
+          onChange={(e) => setTitle(e.target.value)}
         />
+      </TitleContainer>
+      <div className="w-[200px] flex justify-center items-center border rounded">
+        {imageSrc && <img src={imageSrc} alt="img" />}
+      </div>
+      <AttachFileButton htmlFor="file">
+        {file ? "사진 추가 완료!" : "사진 추가(1MB이하)"}
+      </AttachFileButton>
+      <input
+        id="file"
+        type="file"
+        className="hidden"
+        onChange={encodeFileToBase64}
+        accept="image/*"
+        required
+      />
 
-        <TextArea
-          onChange={(e) => setDescription(e.target.value)}
-          required
-          rows={10}
-          maxLength={180}
-          placeholder="후기글"
-        />
-        <SubmitBtn type="submit" value={isLoading ? "Loading" : "게시하기"} />
-      </form>
-    </Layout>
+      <TextArea
+        onChange={(e) => setDescription(e.target.value)}
+        required
+        rows={10}
+        maxLength={180}
+        placeholder="후기글"
+      />
+      <SubmitBtn type="submit" value={isLoading ? "Loading" : "게시하기"} />
+    </form>
   );
 };
 
