@@ -15,6 +15,7 @@ import Post from "./post";
 
 export interface IPost {
   id: string;
+  uuid: string;
   photo?: string;
   title: string;
   description: string;
@@ -56,7 +57,7 @@ export default function PostList() {
       // });
       unsubscribe = await onSnapshot(postsQuery, (snapshot) => {
         const posts = snapshot.docs.map((doc) => {
-          const { title, description, created, userId, username, photo } =
+          const { title, description, created, userId, username, photo, uuid } =
             doc.data();
           return {
             title,
@@ -65,6 +66,7 @@ export default function PostList() {
             userId,
             username,
             photo,
+            uuid,
             id: doc.id,
           };
         });
@@ -78,12 +80,12 @@ export default function PostList() {
   }, []);
 
   return (
-    <div className=" min-h-screen px-5 px-6 lg:mx-[250px]  mt-10">
+    <div className=" min-h-screen px-5 px-6 lg:mx-[100px]  mt-10">
       <h1 className="text-center text-2xl font-bold sm:text-5xl mb-3">
         캠핑 후기 : {posts.length}
       </h1>
       <HLine />
-      <div className="grid grid-cols-1 md:grid-cols-2 m-6 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 m-6 gap-8 cursor-pointer">
         {posts.map((post) => (
           <Post key={post.id} {...post} />
         ))}

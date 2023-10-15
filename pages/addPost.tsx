@@ -1,4 +1,4 @@
-import Layout from "../components/layout";
+import { v4 as uuidv4 } from "uuid";
 import {
   ChangeEvent,
   FormEvent,
@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-const TextArea = styled.textarea`
+export const TextArea = styled.textarea`
   margin-top: 5px;
   border: 2px solid white;
   padding: 20px;
@@ -22,6 +22,7 @@ const TextArea = styled.textarea`
   background-color: #dac2c2;
   width: 50%;
   resize: none;
+  cursor: pointer
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   &::placeholder {
@@ -33,7 +34,7 @@ const TextArea = styled.textarea`
   }
 `;
 
-const TitleContainer = styled.section`
+export const TitleContainer = styled.section`
   input {
     width: 100%;
     height: 35px;
@@ -59,7 +60,7 @@ export const HLine = styled.div`
   background-color: #aaa;
 `;
 
-const AttachFileButton = styled.label`
+export const AttachFileButton = styled.label`
   padding: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -127,7 +128,7 @@ const PostAdd = () => {
     if (title === "") {
       alert("제목을 입력해주세요!");
     } else if (!file) {
-      alert("사진 첨부부탁드립니다");
+      alert("사진 첨부 부탁드립니다.");
     } else if (description === "") {
       alert("후기글 입력해주세요!");
     } else {
@@ -139,6 +140,7 @@ const PostAdd = () => {
           description,
           created: Date.now(),
           username: user.displayName,
+          uuid: uuidv4(),
           userId: user.uid,
         });
 
@@ -165,7 +167,7 @@ const PostAdd = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex flex-col  items-center text-center min-h-screen"
+      className="flex flex-col items-center text-center min-h-screen "
     >
       <h1 className="mt-10 font-bold text-[30px]">게시글 작성</h1>
       <HLine />
@@ -191,7 +193,6 @@ const PostAdd = () => {
         className="hidden"
         onChange={encodeFileToBase64}
         accept="image/*"
-        required
       />
 
       <TextArea
@@ -201,7 +202,7 @@ const PostAdd = () => {
         maxLength={180}
         placeholder="후기글"
       />
-      <SubmitBtn type="submit" value={isLoading ? "Loading" : "게시하기"} />
+      <SubmitBtn type="submit" value={isLoading ? "Loading..." : "게시하기"} />
     </form>
   );
 };
