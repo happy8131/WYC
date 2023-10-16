@@ -119,9 +119,16 @@ export default function Tweet({
     }
   };
 
+  const onClick = () => {
+    sessionStorage.setItem("detailTitle", title);
+    sessionStorage.setItem("detailPhoto", photo as string);
+    sessionStorage.setItem("detailDescription", description);
+    router.push(`/detail/${id}`);
+  };
+
   return (
     <div
-      onClick={() => router.push(`/detail/${uuid}`)}
+      onClick={onClick}
       className="flex flex-col m-3 rounded-xl w-full
     transition duration-300 transform border border-gray-300
     hover:scale-105

@@ -65,7 +65,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center text-center mt-50 w-100%">
+    <div className="flex flex-col justify-center items-center text-center mt-50 w-100% min-h-screen">
       <h1 className="text-3xl mb-6 mt-5">회원가입</h1>
       <form onSubmit={onSubmit} className="">
         <div className="mb-6">
@@ -75,7 +75,7 @@ const Signup = () => {
             id="name"
             name="name"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="이름"
+            placeholder="닉네임"
             required
           />
         </div>

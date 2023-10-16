@@ -74,7 +74,7 @@ export const AttachFileButton = styled.label`
 `;
 
 const SubmitBtn = styled.input`
-  background-color: skyblue;
+  background-color: #5bbce2;
   color: white;
   border: none;
   padding: 5px;
@@ -159,7 +159,7 @@ const PostAdd = () => {
         console.log(e);
       } finally {
         setLoading(false);
-        router.push("/");
+        router.push("/campingList");
       }
     }
   };
