@@ -73,7 +73,7 @@ export const AttachFileButton = styled.label`
   cursor: pointer;
 `;
 
-const SubmitBtn = styled.input`
+export const SubmitBtn = styled.input`
   background-color: #5bbce2;
   color: white;
   border: none;
@@ -97,6 +97,7 @@ const PostAdd = () => {
   const user = auth.currentUser;
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
+
   useEffect(() => {
     if (!user) {
       router.push("/");
