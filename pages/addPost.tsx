@@ -73,8 +73,8 @@ export const AttachFileButton = styled.label`
   cursor: pointer;
 `;
 
-const SubmitBtn = styled.input`
-  background-color: skyblue;
+export const SubmitBtn = styled.input`
+  background-color: #5bbce2;
   color: white;
   border: none;
   padding: 5px;
@@ -97,6 +97,7 @@ const PostAdd = () => {
   const user = auth.currentUser;
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
+
   useEffect(() => {
     if (!user) {
       router.push("/");
@@ -159,7 +160,7 @@ const PostAdd = () => {
         console.log(e);
       } finally {
         setLoading(false);
-        router.push("/");
+        router.push("/campingList");
       }
     }
   };

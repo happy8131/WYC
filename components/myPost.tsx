@@ -70,7 +70,7 @@ const Photos = styled.img`
   border-radius: 15px;
 `;
 
-export default function Post({
+export default function MyPost({
   username,
   photo,
   title,
@@ -120,10 +120,11 @@ export default function Post({
   };
 
   const onClick = () => {
-    sessionStorage.setItem("detailTitle", title);
-    sessionStorage.setItem("detailPhoto", photo as string);
-    sessionStorage.setItem("detailDescription", description);
-    router.push(`/detail/${id}`);
+    sessionStorage.setItem("myTitle", title);
+    sessionStorage.setItem("myPhoto", photo as string);
+    sessionStorage.setItem("myDescription", description);
+    sessionStorage.setItem("idDoc", id);
+    router.push(`/modify/${id}`);
   };
 
   return (
@@ -135,7 +136,7 @@ export default function Post({
     hover:shadow-lg
     dark:border-gray-200/50
     dark:hover:shadow-gray-400/40
-    hover:text-blue-600"
+    hover:text-blue-600 cursor-pointer"
     >
       <Image
         className="rounded-xl"

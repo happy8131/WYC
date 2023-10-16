@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
 import { IPost } from "../../components/postList";
 import { auth, db } from "../../firebase";
@@ -45,17 +45,25 @@ const Detail = () => {
   const router = useRouter();
   const user = auth.currentUser;
   const id = router.query.detail;
-
+  const [detailTitle, setDetailTitle] = useState("");
+  const [detailPhoto, setDetailPhoto] = useState("");
+  const [detailDescription, setDetailDescription] = useState("");
   const [posts, setPosts] = useState<IPost[]>([]);
 
   useEffect(() => {
+    setDetailTitle(
+      sessionStorage.getItem("detailTitle") as SetStateAction<string>
+    );
+    setDetailPhoto(
+      sessionStorage.getItem("detailPhoto") as SetStateAction<string>
+    );
+    setDetailDescription(
+      sessionStorage.getItem("detailDescription") as SetStateAction<string>
+    );
     let unsubscribe: Unsubscribe | null = null;
     if (!user) return;
     const fetchPosts = async () => {
-      const postsQuery = query(
-        collection(db, "camping"),
-        where("uuid", "==", id)
-      );
+      const postsQuery = query(collection(db, "camping"));
       // const spanshot = await getDocs(tweetsQuery);
 
       // const tweets = spanshot.docs.map((doc) => {
@@ -94,7 +102,7 @@ const Detail = () => {
       unsubscribe && unsubscribe();
     };
   }, []);
-  console.log(posts[0]?.photo);
+  // console.log(posts[0]?.photo);
   return (
     <div className="flex flex-col items-center text-center min-h-screen ">
       <h1 className="mt-10 font-bold text-[30px]">상세 페이지</h1>
@@ -106,23 +114,23 @@ const Detail = () => {
         /> */}
 
         <div className="bg-gray-100 border h-[40px] text-center w-[300px] font-bold border-gray-300 text-gray-900 text-sm rounded-lg mb-5">
-          <h1 className="mt-1.5 text-xl ">{posts[0]?.title}</h1>
+          <h1 className="mt-1.5 text-xl ">{detailTitle}</h1>
         </div>
       </TitleContainer>
 
       {/* <img src={posts[0]?.photo} alt="img" /> */}
-      {posts[0]?.photo && (
+      {detailPhoto && (
         <Image
           className="rounded-xl"
-          src={posts[0]?.photo}
+          src={detailPhoto}
           alt="cover"
-          width="500px"
+          width="450px"
           height="300%"
           objectFit="cover"
           quality={100}
         />
       )}
-      <Div>{posts[0]?.description}</Div>
+      <Div>{detailDescription}</Div>
     </div>
   );
 };
