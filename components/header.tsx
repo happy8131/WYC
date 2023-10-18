@@ -2,7 +2,6 @@ import { auth } from "../firebase";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-
 import styled from "styled-components";
 
 export const HeaderImg = styled.img`
