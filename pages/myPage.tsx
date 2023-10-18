@@ -106,8 +106,16 @@ const myPage = () => {
 
       unsubscribe = await onSnapshot(postsQuery, (snapshot) => {
         const posts = snapshot.docs.map((doc) => {
-          const { title, description, created, userId, username, photo, uuid } =
-            doc.data();
+          const {
+            title,
+            description,
+            created,
+            userId,
+            username,
+            photo,
+            avatarPhoto,
+            uuid,
+          } = doc.data();
           return {
             title,
             description,
@@ -117,6 +125,7 @@ const myPage = () => {
             uuid,
             username,
             nameEdit,
+            avatarPhoto,
             id: doc.id,
           };
         });
