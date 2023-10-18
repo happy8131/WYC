@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Layout from "../components/layout";
+import Swal from "sweetalert2";
 
 export const TextArea = styled.textarea`
   margin-top: 5px;
@@ -128,41 +129,63 @@ const PostAdd = () => {
     e.preventDefault();
     const user = auth.currentUser;
     if (title === "") {
-      alert("제목을 입력해주세요!");
+      Swal.fire({
+        icon: "info",
+        title: "제목을 입력해주세요!",
+        // footer: '<a href="/overview"><b>본인 인증으로 전체 아이디 확인하기</b></a>',
+      });
     } else if (!file) {
-      alert("사진 첨부 부탁드립니다.");
+      Swal.fire({
+        icon: "info",
+        title: "사진 첨부 부탁드립니다!",
+        // footer: '<a href="/overview"><b>본인 인증으로 전체 아이디 확인하기</b></a>',
+      });
     } else if (description === "") {
-      alert("후기글 입력해주세요!");
+      Swal.fire({
+        icon: "info",
+        title: "후기글 입력해주세요!",
+        // footer: '<a href="/overview"><b>본인 인증으로 전체 아이디 확인하기</b></a>',
+      });
     } else {
       if (!user) return;
-      try {
-        setLoading(true);
-        const doc = await addDoc(collection(db, "camping"), {
-          title,
-          description,
-          created: Date.now(),
-          username: user.displayName,
-          uuid: uuidv4(),
-          userId: user.uid,
-        });
+      Swal.fire({
+        icon: "question",
+        title: "작성 완료 하셨나요?",
+        showCancelButton: true,
+        confirmButtonText: "확인",
+        cancelButtonText: "취소",
+      }).then(async (res) => {
+        if (res.isConfirmed) {
+          try {
+            setLoading(true);
+            const doc = await addDoc(collection(db, "camping"), {
+              title,
+              description,
+              created: Date.now(),
+              username: user.displayName,
+              uuid: uuidv4(),
+              userId: user.uid,
+            });
 
-        if (file) {
-          const locationRef = ref(storage, `camping/${user.uid}/${doc.id}`);
-          const result = await uploadBytes(locationRef, file);
-          const url = await getDownloadURL(result.ref);
-          await updateDoc(doc, {
-            photo: url,
-          });
+            if (file) {
+              const locationRef = ref(storage, `camping/${user.uid}/${doc.id}`);
+              const result = await uploadBytes(locationRef, file);
+              const url = await getDownloadURL(result.ref);
+              await updateDoc(doc, {
+                photo: url,
+              });
+            }
+            setTitle("");
+            setDescription("");
+            setFile(null);
+          } catch (e) {
+            console.log(e);
+          } finally {
+            setLoading(false);
+            router.push("/campingList");
+          }
         }
-        setTitle("");
-        setDescription("");
-        setFile(null);
-      } catch (e) {
-        console.log(e);
-      } finally {
-        setLoading(false);
-        router.push("/campingList");
-      }
+      });
     }
   };
 

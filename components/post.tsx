@@ -73,6 +73,7 @@ const Photos = styled.img`
 
 export default function Post({
   username,
+  avatarPhoto,
   photo,
   title,
   description,
@@ -104,16 +105,30 @@ export default function Post({
     hover:text-blue-600"
     >
       <img
-        className="rounded-xl"
+        className="rounded-xl w-full h-full"
         src={photo as any}
         alt="cover"
-        width="100%"
-        height="60%"
       />
       <div className="p-4 flex flex-col ">
         <h1 className="text-2xl font-bold">{title}</h1>
         <h3 className="mt-4 text-xl">{description?.slice(0, 20)}...</h3>
-        <div className="flex items-center">{username}</div>
+        <div className="flex items-center">
+          {Boolean(avatarPhoto) ? (
+            <AvatarImg src={avatarPhoto as string} />
+          ) : (
+            <svg
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+              strokeWidth="2"
+              className="w-6 h-6 text-white p-2 bg-indigo-500 rounded-full"
+              aria-hidden="true"
+            >
+              <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
+            </svg>
+          )}
+          {username}
+        </div>
       </div>
     </div>
   );

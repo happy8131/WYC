@@ -17,6 +17,8 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import Layout from "../components/layout";
+import Swal from "sweetalert2";
+import { GiCampingTent } from "react-icons/gi";
 
 const AvatarUpload = styled.label`
   width: 80px;
@@ -40,37 +42,23 @@ const AvatarInput = styled.input`
   display: none;
 `;
 
-const EditInput = styled.input`
-  padding: 10px 20px;
-  border-radius: 50px;
-  border: none;
-`;
+const EmptyPage = styled.div`
+  .size-camp {
+    font-size: 500px;
 
-const Name = styled.span`
-  font-size: 22px;
-  display: flex;
-  width: auto;
-  text-align: center;
-  span {
-    margin-left: 5px;
-    font-size: 12px;
-
-    padding: 5px;
-
-    background-color: skyblue;
-    border-radius: 10px;
-    cursor: pointer;
+    color: rgba(0, 0, 0, 0.1);
   }
-  p {
-    font-size: 12px;
-    margin-left: 5px;
-    padding: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    text-align: center;
-    background-color: skyblue;
-    border-radius: 10px;
-    cursor: pointer;
+  @media screen and (max-width: 500px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .size-camp {
+      font-size: 300px;
+      position: relative;
+      top: 10%;
+      left: 3%;
+      color: rgba(0, 0, 0, 0.1);
+    }
   }
 `;
 
@@ -78,7 +66,7 @@ const myPage = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const user = auth.currentUser;
   const [avatar, setAvatar] = useState(user?.photoURL);
-  const [nameEdit, setNameEdit] = useState("");
+  const [nameEdit, setNameEdit] = useState<any>(user?.displayName);
   const [bEdit, setbEdit] = useState(false);
   const [docId, setDocId] = useState("");
   const router = useRouter();
@@ -91,10 +79,18 @@ const myPage = () => {
       const locationRef = ref(storage, `avatars/${user?.uid}`);
       const result = await uploadBytes(locationRef, file);
       const avatarUrl = await getDownloadURL(result.ref);
+      const docRef = doc(db, "camping", docId);
       setAvatar(avatarUrl);
       await updateProfile(user, {
         photoURL: avatarUrl,
       });
+      for (let i = 0; i < posts.length; i += 1) {
+        const ref = doc(db, "camping", posts[i]?.id);
+        await updateDoc(ref, {
+          avatarPhoto: avatarUrl,
+        });
+      }
+      router.reload();
     }
   };
 
@@ -107,23 +103,19 @@ const myPage = () => {
         where("userId", "==", user?.uid),
         orderBy("created", "desc")
       );
-      // const spanshot = await getDocs(tweetsQuery);
 
-      // const tweets = spanshot.docs.map((doc) => {
-      //   const { tweet, created, userId, username, photo } = doc.data();
-      //   return {
-      //     tweet,
-      //     created,
-      //     userId,
-      //     username,
-      //     photo,
-      //     id: doc.id,
-      //   };
-      // });
       unsubscribe = await onSnapshot(postsQuery, (snapshot) => {
         const posts = snapshot.docs.map((doc) => {
-          const { title, description, created, userId, username, photo, uuid } =
-            doc.data();
+          const {
+            title,
+            description,
+            created,
+            userId,
+            username,
+            photo,
+            avatarPhoto,
+            uuid,
+          } = doc.data();
           return {
             title,
             description,
@@ -132,11 +124,13 @@ const myPage = () => {
             photo,
             uuid,
             username,
+            nameEdit,
+            avatarPhoto,
             id: doc.id,
           };
         });
 
-        setNameEdit(posts[0]?.username);
+        setNameEdit(user?.displayName);
         setPosts(posts);
       });
     };
@@ -144,27 +138,33 @@ const myPage = () => {
     return () => {
       unsubscribe && unsubscribe();
     };
-  }, []);
+  }, [bEdit]);
 
   const onClick = async () => {
     if (!user) return;
     if (nameEdit.length < 2) {
-      alert("이름은 2글자 이상입니다!");
+      Swal.fire({
+        icon: "info",
+        title: "이름은 2글자 이상입니다.",
+        // footer: '<a href="/overview"><b>본인 인증으로 전체 아이디 확인하기</b></a>',
+      });
       return;
     }
     try {
-      // await updateProfile(user, {
-      //   displayName: nameEdit,
-      // });
-      const ref = doc(db, "camping", docId);
-      await updateDoc(ref, {
-        username: nameEdit,
+      await updateProfile(user, {
+        displayName: nameEdit,
       });
+      for (let i = 0; i < posts.length; i += 1) {
+        const ref = doc(db, "camping", posts[i]?.id);
+        await updateDoc(ref, {
+          username: nameEdit,
+        });
+      }
+      setbEdit(false);
     } catch (err) {
       console.log(err);
     }
 
-    setbEdit(false);
     //  router.reload();
   };
 
@@ -174,7 +174,7 @@ const myPage = () => {
 
   return (
     <Layout>
-      <div className=" min-h-screen px-5 px-6 lg:mx-[100px]  mt-10 ">
+      <div className="flex flex-col jutify-center items-center min-h-screen px-5 px-6 lg:mx-[100px]  mt-10 ">
         <h1 className="text-center text-2xl font-bold sm:text-5xl mb-3">
           마이페이지
         </h1>
@@ -205,7 +205,7 @@ const myPage = () => {
           <input
             className="ml-11 text-center w-15"
             onChange={onChange}
-            value={nameEdit}
+            defaultValue={user?.displayName as any}
           />
           <div className="ml-3 bg-green-500 p-1 rounded-xl">
             <button onClick={onClick} className="text-gray-100">
@@ -213,11 +213,17 @@ const myPage = () => {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 m-6 gap-8 cursor-pointer">
-          {posts.map((post) => (
-            <MyPost key={post.id} {...post} />
-          ))}
-        </div>
+        {posts.length ? (
+          <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 m-6 gap-8 cursor-pointer">
+            {posts.map((post) => (
+              <MyPost key={post.id} {...post} />
+            ))}
+          </div>
+        ) : (
+          <EmptyPage>
+            <GiCampingTent className="size-camp" />
+          </EmptyPage>
+        )}
       </div>
     </Layout>
   );
