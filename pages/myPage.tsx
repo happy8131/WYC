@@ -90,7 +90,6 @@ const myPage = () => {
           avatarPhoto: avatarUrl,
         });
       }
-      router.reload();
     }
   };
 
