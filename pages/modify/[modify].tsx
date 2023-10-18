@@ -19,6 +19,7 @@ import {
   useState,
 } from "react";
 import styled from "styled-components";
+import Swal from "sweetalert2";
 import Layout from "../../components/layout";
 import { IPost } from "../../components/postList";
 import { auth, db, storage } from "../../firebase";
@@ -79,7 +80,11 @@ const Modify = () => {
         });
         // setDetailPhoto(file);
       } else {
-        alert("1MB이하로 부탁드립니다.");
+        Swal.fire({
+          icon: "info",
+          title: "1MB 이하로 부탁드립니다.",
+          // footer: '<a href="/overview"><b>본인 인증으로 전체 아이디 확인하기</b></a>',
+        });
         return;
       }
     }

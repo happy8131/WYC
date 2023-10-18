@@ -1,22 +1,40 @@
 import { auth } from "../firebase";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 const Header = () => {
   const router = useRouter();
   const user = auth.currentUser;
   const nav = router.asPath;
   const onLogOut = async () => {
-    const ok = confirm("로그아웃 하시겠습니까?");
-    if (ok) {
-      await auth.signOut();
-      router.push("/");
-    }
+    Swal.fire({
+      icon: "question",
+      title: "로그아웃 하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonText: "확인",
+      cancelButtonText: "취소",
+    }).then(async (res) => {
+      if (res.isConfirmed) {
+        await auth.signOut();
+        router.push("/");
+      }
+    });
   };
 
   const onClick = () => {
     if (!user) {
-      alert("로그인이 필요합니다.");
+      Swal.fire({
+        icon: "info",
+        title: "로그인이 필요합니다!",
+        showCancelButton: true,
+        confirmButtonText: "확인",
+        cancelButtonText: "취소",
+      }).then((res) => {
+        if (res.isConfirmed) {
+          router.push("/login");
+        }
+      });
     } else {
       router.push("/addPost");
     }

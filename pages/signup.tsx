@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FirebaseError } from "firebase/app";
 import Layout from "../components/layout";
+import Swal from "sweetalert2";
 
 const Signup = () => {
   const router = useRouter();
@@ -43,7 +44,10 @@ const Signup = () => {
     setError("");
     if (isLoading || name === "" || email === "" || password === "") return;
     if (name.length < 2) {
-      alert("닉네임은 2글자 이상입니다.");
+      Swal.fire({
+        icon: "info",
+        title: "이름은 2글자 이상입니다.",
+      });
       return;
     }
     try {

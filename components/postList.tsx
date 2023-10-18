@@ -17,6 +17,7 @@ export interface IPost {
   id: string;
   uuid: string;
   photo?: string;
+  avatarPhoto?: string;
   title: string;
   description: string;
   userId: string;
@@ -57,14 +58,23 @@ export default function PostList() {
       // });
       unsubscribe = await onSnapshot(postsQuery, (snapshot) => {
         const posts = snapshot.docs.map((doc) => {
-          const { title, description, created, userId, username, photo, uuid } =
-            doc.data();
+          const {
+            title,
+            description,
+            created,
+            userId,
+            username,
+            photo,
+            avatarPhoto,
+            uuid,
+          } = doc.data();
           return {
             title,
             description,
             created,
             userId,
             username,
+            avatarPhoto,
             photo,
             uuid,
             id: doc.id,
