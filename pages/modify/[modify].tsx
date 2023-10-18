@@ -19,6 +19,7 @@ import {
   useState,
 } from "react";
 import styled from "styled-components";
+import Layout from "../../components/layout";
 import { IPost } from "../../components/postList";
 import { auth, db, storage } from "../../firebase";
 import { AttachFileButton, HLine, SubmitBtn, TitleContainer } from "../addPost";
@@ -72,7 +73,7 @@ const Modify = () => {
         const url = await getDownloadURL(result.ref);
         const docRef = doc(db, "camping", docId);
 
-        setDetailPhoto(url);
+        setDetailPhoto(url as any);
         await updateDoc(docRef, {
           photo: url,
         });
@@ -117,61 +118,64 @@ const Modify = () => {
   };
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="flex flex-col items-center text-center min-h-screen"
-    >
-      <h1 className="mt-10 font-bold text-[30px]">게시글 수정</h1>
-      <HLine />
-      <TitleContainer>
-        {/* <input
+    <Layout>
+      <form
+        onSubmit={onSubmit}
+        className="flex flex-col items-center text-center min-h-screen"
+      >
+        <h1 className="mt-10 font-bold text-[30px]">게시글 수정</h1>
+        <HLine />
+        <TitleContainer>
+          {/* <input
             className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg mb-5"
             value={posts[0]?.title}
           /> */}
 
+          <input
+            type="text"
+            name="title"
+            className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg mb-5"
+            placeholder="제목"
+            required
+            value={detailTitle}
+            onChange={(e) => setDetailTitle(e.target.value)}
+          />
+        </TitleContainer>
+
+        {/* <img src={posts[0]?.photo} alt="img" /> */}
+        {detailPhoto && (
+          <img
+            className="rounded-xl"
+            src={detailPhoto as any}
+            alt="cover"
+            width="450px"
+            height="300%"
+          />
+        )}
+        <AttachFileButton htmlFor="file">사진 수정(1MB이하)</AttachFileButton>
         <input
-          type="text"
-          name="title"
-          className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg mb-5"
-          placeholder="제목"
+          id="file"
+          type="file"
+          className="hidden"
+          onChange={onChange}
+          accept="image/*"
+        />
+
+        <Textea
+          value={detailDescription}
           required
-          value={detailTitle}
-          onChange={(e) => setDetailTitle(e.target.value)}
+          rows={10}
+          maxLength={180}
+          onChange={(e: { target: { value: SetStateAction<string> } }) =>
+            setDetailDescription(e.target.value)
+          }
         />
-      </TitleContainer>
-
-      {/* <img src={posts[0]?.photo} alt="img" /> */}
-      {detailPhoto && (
-        <Image
-          className="rounded-xl"
-          src={detailPhoto as any}
-          alt="cover"
-          width="450px"
-          height="300%"
-          objectFit="cover"
-          quality={100}
+        <SubmitBtn
+          type="submit"
+          value={isLoading ? "Loading..." : "수정하기"}
         />
-      )}
-      <AttachFileButton htmlFor="file">사진 수정(1MB이하)</AttachFileButton>
-      <input
-        id="file"
-        type="file"
-        className="hidden"
-        onChange={onChange}
-        accept="image/*"
-      />
-
-      <Textea
-        value={detailDescription}
-        required
-        rows={10}
-        maxLength={180}
-        onChange={(e: { target: { value: SetStateAction<string> } }) =>
-          setDetailDescription(e.target.value)
-        }
-      />
-      <SubmitBtn type="submit" value={isLoading ? "Loading..." : "수정하기"} />
-    </form>
+      </form>
+    </Layout>
   );
 };
 

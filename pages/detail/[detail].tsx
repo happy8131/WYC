@@ -13,6 +13,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
+import Layout from "../../components/layout";
 import { IPost } from "../../components/postList";
 import { auth, db } from "../../firebase";
 import { HLine, TextArea, TitleContainer } from "../addPost";
@@ -104,34 +105,34 @@ const Detail = () => {
   }, []);
   // console.log(posts[0]?.photo);
   return (
-    <div className="flex flex-col items-center text-center min-h-screen ">
-      <h1 className="mt-10 font-bold text-[30px]">상세 페이지</h1>
-      <HLine />
-      <TitleContainer>
-        {/* <input
+    <Layout>
+      <div className="flex flex-col items-center text-center min-h-screen ">
+        <h1 className="mt-10 font-bold text-[30px]">상세 페이지</h1>
+        <HLine />
+        <TitleContainer>
+          {/* <input
           className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg mb-5"
           value={posts[0]?.title}
         /> */}
 
-        <div className="bg-gray-100 border h-[40px] text-center w-[300px] font-bold border-gray-300 text-gray-900 text-sm rounded-lg mb-5">
-          <h1 className="mt-1.5 text-xl ">{detailTitle}</h1>
-        </div>
-      </TitleContainer>
+          <div className="bg-gray-100 border h-[40px] text-center w-[300px] font-bold border-gray-300 text-gray-900 text-sm rounded-lg mb-5">
+            <h1 className="mt-1.5 text-xl ">{detailTitle}</h1>
+          </div>
+        </TitleContainer>
 
-      {/* <img src={posts[0]?.photo} alt="img" /> */}
-      {detailPhoto && (
-        <Image
-          className="rounded-xl"
-          src={detailPhoto}
-          alt="cover"
-          width="450px"
-          height="300%"
-          objectFit="cover"
-          quality={100}
-        />
-      )}
-      <Div>{detailDescription}</Div>
-    </div>
+        {/* <img src={posts[0]?.photo} alt="img" /> */}
+        {detailPhoto && (
+          <img
+            className="rounded-xl"
+            src={detailPhoto}
+            alt="cover"
+            width="450px"
+            height="300%"
+          />
+        )}
+        <Div>{detailDescription}</Div>
+      </div>
+    </Layout>
   );
 };
 

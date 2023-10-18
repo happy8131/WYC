@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import { auth, db, storage } from "../firebase";
+import { AvatarImg } from "./myPost";
 import { IPost } from "./postList";
 
 const Wrapper = styled.div`
@@ -81,43 +82,8 @@ export default function Post({
 }: IPost) {
   const user = auth.currentUser;
   const [photoEdit, setPhotoEdit] = useState(photo);
+  const [avatar, setAvatar] = useState(user?.photoURL);
   const router = useRouter();
-  const onDelete = async () => {
-    const ok = confirm("정말 게시글을 삭제 하시겠습니까?");
-
-    if (!ok || user?.uid !== userId) return;
-
-    try {
-      await deleteDoc(doc(db, "tweets", id));
-      if (photo) {
-        const photoRef = ref(storage, `tweets/${user.uid}/${id}`);
-        await deleteObject(photoRef);
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-    }
-  };
-
-  const onFileEdit = async (e: ChangeEvent<HTMLInputElement>) => {
-    const { files } = e?.target;
-    if (user?.uid !== userId) return;
-    if (files && files.length === 1 && photo) {
-      if (Math.floor(files[0].size / 1024) <= 1024) {
-        const file = files[0];
-        const photoRef = ref(storage, `tweets/${user.uid}/${id}`);
-        const result = await uploadBytes(photoRef, file);
-        const url = await getDownloadURL(result.ref);
-        const docRef = doc(db, "tweets", id);
-        setPhotoEdit(url);
-        await updateDoc(docRef, {
-          photo: url,
-        });
-      } else {
-        alert("1MB이하로 부탁드립니다.");
-      }
-    }
-  };
 
   const onClick = () => {
     sessionStorage.setItem("detailTitle", title);
@@ -137,20 +103,17 @@ export default function Post({
     dark:hover:shadow-gray-400/40
     hover:text-blue-600"
     >
-      <Image
+      <img
         className="rounded-xl"
         src={photo as any}
         alt="cover"
         width="100%"
         height="60%"
-        layout="responsive"
-        objectFit="cover"
-        quality={100}
       />
       <div className="p-4 flex flex-col ">
         <h1 className="text-2xl font-bold">{title}</h1>
         <h3 className="mt-4 text-xl">{description?.slice(0, 20)}...</h3>
-        <div>{username}</div>
+        <div className="flex items-center">{username}</div>
       </div>
     </div>
   );

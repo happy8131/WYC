@@ -11,6 +11,7 @@ import { auth, db, storage } from "../firebase";
 import { useRouter } from "next/router";
 import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import Layout from "../components/layout";
 
 export const TextArea = styled.textarea`
   margin-top: 5px;
@@ -22,7 +23,7 @@ export const TextArea = styled.textarea`
   background-color: #dac2c2;
   width: 50%;
   resize: none;
-  cursor: pointer
+  cursor: pointer;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   &::placeholder {
@@ -105,7 +106,7 @@ const PostAdd = () => {
   }, [user]);
 
   const encodeFileToBase64 = (e: ChangeEvent<HTMLInputElement>) => {
-    const { files } = e?.target;
+    const { files }: any = e?.target;
     const reader = new FileReader();
     reader.readAsDataURL(files[0]);
     if (files && files.length === 1) {
@@ -166,45 +167,52 @@ const PostAdd = () => {
   };
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="flex flex-col items-center text-center min-h-screen "
-    >
-      <h1 className="mt-10 font-bold text-[30px]">게시글 작성</h1>
-      <HLine />
-      <TitleContainer>
+    <Layout>
+      <form
+        onSubmit={onSubmit}
+        className="flex flex-col items-center text-center min-h-screen "
+      >
+        <h1 className="mt-10 font-bold text-[30px]">게시글 작성</h1>
+        <HLine />
+        <TitleContainer>
+          <input
+            type="text"
+            name="title"
+            className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg mb-5"
+            placeholder="제목"
+            required
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </TitleContainer>
+        <div className="w-[200px] flex justify-center items-center border rounded">
+          {imageSrc && <img src={imageSrc} alt="img" />}
+        </div>
+        <AttachFileButton htmlFor="file">
+          {file ? "사진 추가 완료!" : "사진 추가(1MB이하)"}
+        </AttachFileButton>
         <input
-          type="text"
-          name="title"
-          className="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg mb-5"
-          placeholder="제목"
-          required
-          onChange={(e) => setTitle(e.target.value)}
+          id="file"
+          type="file"
+          className="hidden"
+          onChange={encodeFileToBase64}
+          accept="image/*"
         />
-      </TitleContainer>
-      <div className="w-[200px] flex justify-center items-center border rounded">
-        {imageSrc && <img src={imageSrc} alt="img" />}
-      </div>
-      <AttachFileButton htmlFor="file">
-        {file ? "사진 추가 완료!" : "사진 추가(1MB이하)"}
-      </AttachFileButton>
-      <input
-        id="file"
-        type="file"
-        className="hidden"
-        onChange={encodeFileToBase64}
-        accept="image/*"
-      />
 
-      <TextArea
-        onChange={(e) => setDescription(e.target.value)}
-        required
-        rows={10}
-        maxLength={180}
-        placeholder="후기글"
-      />
-      <SubmitBtn type="submit" value={isLoading ? "Loading..." : "게시하기"} />
-    </form>
+        <TextArea
+          onChange={(e: { target: { value: SetStateAction<string> } }) =>
+            setDescription(e.target.value)
+          }
+          required
+          rows={10}
+          maxLength={180}
+          placeholder="후기글"
+        />
+        <SubmitBtn
+          type="submit"
+          value={isLoading ? "Loading..." : "게시하기"}
+        />
+      </form>
+    </Layout>
   );
 };
 

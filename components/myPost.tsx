@@ -70,6 +70,11 @@ const Photos = styled.img`
   border-radius: 15px;
 `;
 
+export const AvatarImg = styled.img`
+  width: 5%;
+  margin-right: 3px;
+`;
+
 export default function MyPost({
   username,
   photo,
@@ -81,41 +86,24 @@ export default function MyPost({
 }: IPost) {
   const user = auth.currentUser;
   const [photoEdit, setPhotoEdit] = useState(photo);
+  const [avatar, setAvatar] = useState(user?.photoURL);
   const router = useRouter();
+
   const onDelete = async () => {
     const ok = confirm("정말 게시글을 삭제 하시겠습니까?");
 
     if (!ok || user?.uid !== userId) return;
 
     try {
-      await deleteDoc(doc(db, "tweets", id));
+      await deleteDoc(doc(db, "camping", id));
       if (photo) {
-        const photoRef = ref(storage, `tweets/${user.uid}/${id}`);
+        const photoRef = ref(storage, `camping/${user.uid}/${id}`);
         await deleteObject(photoRef);
       }
+      router.reload();
     } catch (e) {
       console.log(e);
     } finally {
-    }
-  };
-
-  const onFileEdit = async (e: ChangeEvent<HTMLInputElement>) => {
-    const { files } = e?.target;
-    if (user?.uid !== userId) return;
-    if (files && files.length === 1 && photo) {
-      if (Math.floor(files[0].size / 1024) <= 1024) {
-        const file = files[0];
-        const photoRef = ref(storage, `tweets/${user.uid}/${id}`);
-        const result = await uploadBytes(photoRef, file);
-        const url = await getDownloadURL(result.ref);
-        const docRef = doc(db, "tweets", id);
-        setPhotoEdit(url);
-        await updateDoc(docRef, {
-          photo: url,
-        });
-      } else {
-        alert("1MB이하로 부탁드립니다.");
-      }
     }
   };
 
@@ -129,7 +117,6 @@ export default function MyPost({
 
   return (
     <div
-      onClick={onClick}
       className="flex flex-col m-3 rounded-xl w-full
     transition duration-300 transform border border-gray-300
     hover:scale-105
@@ -138,21 +125,37 @@ export default function MyPost({
     dark:hover:shadow-gray-400/40
     hover:text-blue-600 cursor-pointer"
     >
-      <Image
+      <img
+        onClick={onClick}
         className="rounded-xl"
         src={photo as any}
         alt="cover"
         width="100%"
         height="60%"
-        layout="responsive"
-        objectFit="cover"
-        quality={100}
       />
-      <div className="p-4 flex flex-col ">
+      <div className="p-4 flex flex-col" onClick={onClick}>
         <h1 className="text-2xl font-bold">{title}</h1>
         <h3 className="mt-4 text-xl">{description?.slice(0, 20)}...</h3>
-        <div>{username}</div>
+        <div className="flex items-center">
+          {" "}
+          {Boolean(avatar) ? (
+            <AvatarImg src={avatar as string} />
+          ) : (
+            <svg
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path d="M10 8a3 3 0 100-6 3 3 0 000 6zM3.465 14.493a1.23 1.23 0 00.41 1.412A9.957 9.957 0 0010 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 00-13.074.003z" />
+            </svg>
+          )}
+          {username}
+        </div>
       </div>
+      {user?.uid === userId && (
+        <DeleteButton onClick={onDelete}>게시글 삭제</DeleteButton>
+      )}
     </div>
   );
 }
