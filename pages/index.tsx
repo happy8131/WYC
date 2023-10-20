@@ -14,11 +14,9 @@ export default function Home() {
               캠핑 후기를 공유 해볼까요?
             </h1>
             <p className="mb-8 leading-relaxed">
-              오늘은 어디로 가볼까?
-              <p>
-                가족, 친구와 함께 떠나는 캠핑 추억에 남는 캠핑 SITE, 지금 With
-                You Camping 과 공유해요
-              </p>
+              오늘은 어디로 가볼까? 가족, 친구와 함께 떠나는 캠핑 추억에 남는
+              캠핑 SITE, 캠핑지의 위치, 조건, 평점 등 원하는 캠핑 정보를 쉽게
+              얻어 갈 수 있어요. 지금 With You Camping 과 공유해요.
             </p>
             <div className="flex justify-center ">
               <Link href="/campingList">

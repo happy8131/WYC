@@ -118,6 +118,7 @@ const myPage = () => {
             photo,
             avatarPhoto,
             uuid,
+            rating,
           } = doc.data();
           return {
             title,
@@ -129,6 +130,7 @@ const myPage = () => {
             username,
             nameEdit,
             avatarPhoto,
+            rating,
             id: doc.id,
           };
         });

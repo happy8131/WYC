@@ -13,6 +13,7 @@ import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import Layout from "../components/layout";
 import Swal from "sweetalert2";
+import StarRatingCheck from "../components/starRatingCheck";
 
 export const TextArea = styled.textarea`
   margin-top: 5px;
@@ -83,11 +84,21 @@ export const SubmitBtn = styled.input`
   border-radius: 10px;
   font-size: 16px;
   margin-top: 10px;
+  margin-bottom: 10px;
   cursor: pointer;
   &:hover,
   &:active {
     opacity: 0.9;
   }
+`;
+
+const StarCheckContainer = styled.div`
+  margin-top: 20px;
+  height: 20px;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const PostAdd = () => {
@@ -99,6 +110,8 @@ const PostAdd = () => {
   const user = auth.currentUser;
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
+  // 평가
+  const [checkRating, setCheckRating] = useState(0);
 
   useEffect(() => {
     if (!user) {
@@ -140,10 +153,10 @@ const PostAdd = () => {
         title: "사진 첨부 부탁드립니다!",
         // footer: '<a href="/overview"><b>본인 인증으로 전체 아이디 확인하기</b></a>',
       });
-    } else if (description === "") {
+    } else if (!checkRating) {
       Swal.fire({
         icon: "info",
-        title: "후기글 입력해주세요!",
+        title: "별점을 매겨주세요!",
         // footer: '<a href="/overview"><b>본인 인증으로 전체 아이디 확인하기</b></a>',
       });
     } else {
@@ -161,6 +174,7 @@ const PostAdd = () => {
             const doc = await addDoc(collection(db, "camping"), {
               title,
               description,
+              rating: checkRating,
               created: Date.now(),
               username: user.displayName,
               uuid: uuidv4(),
@@ -176,6 +190,7 @@ const PostAdd = () => {
               });
             }
             setTitle("");
+            setCheckRating(0);
             setDescription("");
             setFile(null);
           } catch (e) {
@@ -230,6 +245,10 @@ const PostAdd = () => {
           maxLength={180}
           placeholder="후기글"
         />
+        <h3 className="mt-5"> 캠핑장 어떠셨나요? </h3>
+        <StarCheckContainer>
+          <StarRatingCheck setCheckRating={setCheckRating} />
+        </StarCheckContainer>
         <SubmitBtn
           type="submit"
           value={isLoading ? "Loading..." : "게시하기"}

@@ -23,6 +23,7 @@ export interface IPost {
   userId: string;
   username: string;
   created: number;
+  rating: string;
 }
 
 const Wrapper = styled.div`
@@ -67,6 +68,7 @@ export default function PostList() {
             photo,
             avatarPhoto,
             uuid,
+            rating,
           } = doc.data();
           return {
             title,
@@ -77,6 +79,7 @@ export default function PostList() {
             avatarPhoto,
             photo,
             uuid,
+            rating,
             id: doc.id,
           };
         });
