@@ -12,6 +12,7 @@ import styled from "styled-components";
 import { auth, db, storage } from "../firebase";
 import { AvatarImg } from "./myPost";
 import { IPost } from "./postList";
+import StarRating from "./starRating";
 
 export default function Post({
   username,
@@ -21,6 +22,7 @@ export default function Post({
   description,
   userId,
   uuid,
+  rating,
   id,
 }: IPost) {
   const user = auth.currentUser;
@@ -32,6 +34,7 @@ export default function Post({
     sessionStorage.setItem("detailTitle", title);
     sessionStorage.setItem("detailPhoto", photo as string);
     sessionStorage.setItem("detailDescription", description);
+    sessionStorage.setItem("myRating", rating);
     router.push(`/detail/${id}`);
   };
 
@@ -54,13 +57,18 @@ export default function Post({
       <div className="p-4 flex flex-col ">
         <h1 className="text-2xl font-bold">{title}</h1>
         <h3 className="mt-4 text-xl">{description?.slice(0, 20)}...</h3>
-        <div className="flex items-center">
-          {Boolean(avatarPhoto) ? (
-            <AvatarImg src={avatarPhoto as string} />
-          ) : (
-            <AvatarImg src="/logo4.jpg" />
-          )}
-          {username}
+        <div className="flex  justify-between">
+          <div className="flex items-center">
+            {Boolean(avatarPhoto) ? (
+              <AvatarImg src={avatarPhoto as string} />
+            ) : (
+              <AvatarImg src="/logo4.jpg" />
+            )}
+            {username}
+          </div>
+          <div className="">
+            <StarRating postRating={rating} />
+          </div>
         </div>
       </div>
     </div>

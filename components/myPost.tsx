@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { auth, db, storage } from "../firebase";
 import { IPost } from "./postList";
 import Swal from "sweetalert2";
+import StarRating from "./starRating";
 
 const DeleteButton = styled.button`
   background-color: tomato;
@@ -32,6 +33,7 @@ export default function MyPost({
   description,
   userId,
   uuid,
+  rating,
   id,
 }: IPost) {
   const user = auth.currentUser;
@@ -69,6 +71,7 @@ export default function MyPost({
     sessionStorage.setItem("myPhoto", photo as string);
     sessionStorage.setItem("myDescription", description);
     sessionStorage.setItem("idDoc", id);
+    sessionStorage.setItem("myRating", rating);
     router.push(`/modify/${id}`);
   };
 
@@ -91,14 +94,19 @@ export default function MyPost({
       <div className="p-4 flex flex-col" onClick={onClick}>
         <h1 className="text-2xl font-bold">{title}</h1>
         <h3 className="mt-4 text-xl">{description?.slice(0, 20)}...</h3>
-        <div className="flex items-center">
-          {" "}
-          {Boolean(avatarPhoto) ? (
-            <AvatarImg src={avatarPhoto as string} />
-          ) : (
-            <AvatarImg src="/logo3.jpg" />
-          )}
-          {user?.displayName}
+        <div className="flex  justify-between">
+          <div className="flex items-center">
+            {" "}
+            {Boolean(avatarPhoto) ? (
+              <AvatarImg src={avatarPhoto as string} />
+            ) : (
+              <AvatarImg src="/logo3.jpg" />
+            )}
+            {user?.displayName}
+          </div>
+          <div className="">
+            <StarRating postRating={rating} />
+          </div>
         </div>
       </div>
       {user?.uid === userId && (

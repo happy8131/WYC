@@ -74,22 +74,26 @@ const myPage = () => {
   const onAvatarChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
     if (!user) return;
-    if (files && files.length === 1) {
-      const file = files[0];
-      const locationRef = ref(storage, `avatars/${user?.uid}`);
-      const result = await uploadBytes(locationRef, file);
-      const avatarUrl = await getDownloadURL(result.ref);
-      const docRef = doc(db, "camping", docId);
-      setAvatar(avatarUrl);
-      await updateProfile(user, {
-        photoURL: avatarUrl,
-      });
-      for (let i = 0; i < posts.length; i += 1) {
-        const ref = doc(db, "camping", posts[i]?.id);
-        await updateDoc(ref, {
-          avatarPhoto: avatarUrl,
+    try {
+      if (files && files.length === 1) {
+        const file = files[0];
+        const locationRef = ref(storage, `avatars/${user?.uid}`);
+        const result = await uploadBytes(locationRef, file);
+        const avatarUrl = await getDownloadURL(result.ref);
+        //  const docRef = doc(db, "camping", docId);
+        setAvatar(avatarUrl);
+        await updateProfile(user, {
+          photoURL: avatarUrl,
         });
+        for (let i = 0; i < posts.length; i += 1) {
+          const ref = doc(db, "camping", posts[i]?.id);
+          await updateDoc(ref, {
+            avatarPhoto: avatarUrl,
+          });
+        }
       }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -114,6 +118,7 @@ const myPage = () => {
             photo,
             avatarPhoto,
             uuid,
+            rating,
           } = doc.data();
           return {
             title,
@@ -125,6 +130,7 @@ const myPage = () => {
             username,
             nameEdit,
             avatarPhoto,
+            rating,
             id: doc.id,
           };
         });

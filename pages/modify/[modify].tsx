@@ -22,6 +22,7 @@ import styled from "styled-components";
 import Swal from "sweetalert2";
 import Layout from "../../components/layout";
 import { IPost } from "../../components/postList";
+import StarRatingCheck from "../../components/starRatingCheck";
 import { auth, db, storage } from "../../firebase";
 import { AttachFileButton, HLine, SubmitBtn, TitleContainer } from "../addPost";
 
@@ -49,6 +50,15 @@ export const Textea = styled.textarea`
   }
 `;
 
+const StarCheckContainer = styled.div`
+  margin-top: 20px;
+  height: 20px;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 const Modify = () => {
   const router = useRouter();
   const user = auth.currentUser;
@@ -59,6 +69,8 @@ const Modify = () => {
   const [detailPhoto, setDetailPhoto] = useState<File | null>(null);
   const [detailDescription, setDetailDescription] = useState("");
   const [docId, setDocId] = useState("");
+  // 평가
+  const [checkRating, setCheckRating] = useState(0);
   const [posts, setPosts] = useState<IPost[]>([]);
   const [isLoading, setLoading] = useState(false);
 
@@ -99,10 +111,19 @@ const Modify = () => {
       sessionStorage.getItem("myDescription") as SetStateAction<string>
     );
     setDocId(sessionStorage.getItem("idDoc") as SetStateAction<string>);
+    setCheckRating(sessionStorage.getItem("myRating") as any);
   }, []);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (checkRating < 1) {
+      Swal.fire({
+        icon: "info",
+        title: "별점을 매겨주세요!",
+        // footer: '<a href="/overview"><b>본인 인증으로 전체 아이디 확인하기</b></a>',
+      });
+      return;
+    }
     try {
       setLoading(true);
 
@@ -111,6 +132,7 @@ const Modify = () => {
         title: detailTitle,
         description: detailDescription,
         photo: detailPhoto,
+        rating: checkRating,
       });
       if (!user) return;
     } catch (err) {
@@ -165,7 +187,6 @@ const Modify = () => {
           onChange={onChange}
           accept="image/*"
         />
-
         <Textea
           value={detailDescription}
           required
@@ -175,6 +196,13 @@ const Modify = () => {
             setDetailDescription(e.target.value)
           }
         />
+        <h3 className="mt-5"> 캠핑장 어떠셨나요? </h3>
+        <StarCheckContainer>
+          <StarRatingCheck
+            checkRating={checkRating}
+            setCheckRating={setCheckRating}
+          />
+        </StarCheckContainer>
         <SubmitBtn
           type="submit"
           value={isLoading ? "Loading..." : "수정하기"}

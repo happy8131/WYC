@@ -15,11 +15,13 @@ import { SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
 import Layout from "../../components/layout";
 import { IPost } from "../../components/postList";
+import StarRating from "../../components/starRating";
 import { auth, db } from "../../firebase";
 import { HLine, TextArea, TitleContainer } from "../addPost";
 
 export const Div = styled.div`
-  margin-top: 2.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   border: 2px solid white;
   padding: 20px;
   border-radius: 20px;
@@ -42,6 +44,15 @@ export const Div = styled.div`
   }
 `;
 
+const StarCheckContainer = styled.div`
+  margin-top: 20px;
+  height: 20px;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
 const Detail = () => {
   const router = useRouter();
   const user = auth.currentUser;
@@ -49,6 +60,7 @@ const Detail = () => {
   const [detailTitle, setDetailTitle] = useState("");
   const [detailPhoto, setDetailPhoto] = useState("");
   const [detailDescription, setDetailDescription] = useState("");
+  const [checkRating, setCheckRating] = useState(0);
   const [posts, setPosts] = useState<IPost[]>([]);
 
   useEffect(() => {
@@ -61,6 +73,7 @@ const Detail = () => {
     setDetailDescription(
       sessionStorage.getItem("detailDescription") as SetStateAction<string>
     );
+    setCheckRating(sessionStorage.getItem("myRating") as any);
     let unsubscribe: Unsubscribe | null = null;
     if (!user) return;
     const fetchPosts = async () => {
@@ -103,7 +116,7 @@ const Detail = () => {
       unsubscribe && unsubscribe();
     };
   }, []);
-  // console.log(posts[0]?.photo);
+
   return (
     <Layout>
       <div className="flex flex-col items-center text-center min-h-screen ">
@@ -119,7 +132,6 @@ const Detail = () => {
             <h1 className="mt-1.5 text-xl ">{detailTitle}</h1>
           </div>
         </TitleContainer>
-
         {/* <img src={posts[0]?.photo} alt="img" /> */}
         {detailPhoto && (
           <img
@@ -130,6 +142,10 @@ const Detail = () => {
             height="300%"
           />
         )}
+        <h3 className="mt-3 -mb-3"> 캠핑장 어떠셨나요? </h3>
+        <StarCheckContainer>
+          <StarRating postRating={checkRating} />
+        </StarCheckContainer>
         <Div>{detailDescription}</Div>
       </div>
     </Layout>
