@@ -58,7 +58,7 @@ export default function Post({
         <h1 className="text-2xl font-bold">{title}</h1>
         <h3 className="mt-4 text-xl">{description?.slice(0, 20)}...</h3>
         <div className="flex  justify-between">
-          <div className="flex items-center">
+          <div className="flex items-center md:text-sm font-semibold">
             {Boolean(avatarPhoto) ? (
               <AvatarImg src={avatarPhoto as string} />
             ) : (

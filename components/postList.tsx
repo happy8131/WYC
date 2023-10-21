@@ -2,13 +2,11 @@ import { Unsubscribe } from "firebase/auth";
 import {
   collection,
   endAt,
-  getDocs,
   limit,
   onSnapshot,
   orderBy,
   query,
   startAt,
-  where,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
