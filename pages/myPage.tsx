@@ -179,7 +179,7 @@ const myPage = () => {
 
   return (
     <Layout>
-      <div className="flex flex-col jutify-center items-center min-h-screen px-5 px-6 lg:mx-[100px]  mt-10 ">
+      <div className="flex flex-col justify-center items-center min-h-screen px-5 px-6 lg:mx-[100px]  mt-10 ">
         <h1 className="text-center text-2xl font-bold sm:text-5xl mb-3">
           마이페이지
         </h1>
