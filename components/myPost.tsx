@@ -21,7 +21,8 @@ const DeleteButton = styled.button`
 `;
 
 export const AvatarImg = styled.img`
-  width: 5%;
+  width: 8%;
+  border-radius: 10%;
   margin-right: 3px;
 `;
 

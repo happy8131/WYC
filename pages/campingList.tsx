@@ -1,7 +1,7 @@
 import Layout from "../components/layout";
 import PostList from "../components/postList";
 
-export default function () {
+export default function CampingList() {
   return (
     <Layout>
       <PostList />
