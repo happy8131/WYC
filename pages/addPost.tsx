@@ -247,7 +247,10 @@ const PostAdd = () => {
         />
         <h3 className="mt-5"> 캠핑장 어떠셨나요? </h3>
         <StarCheckContainer>
-          <StarRatingCheck setCheckRating={setCheckRating} />
+          <StarRatingCheck
+            checkRating={checkRating}
+            setCheckRating={setCheckRating}
+          />
         </StarCheckContainer>
         <SubmitBtn
           type="submit"

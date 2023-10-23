@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, SetStateAction, Dispatch } from "react";
 
-const Star = ({ starId, marked }: any) => {
+const Star = ({ starId, marked }: { starId: number; marked: boolean }) => {
   return (
     <span
       star-id={starId}
@@ -14,7 +14,13 @@ const Star = ({ starId, marked }: any) => {
 
 // Create an array of 5: Array.from({length: 5}, (v,i) => i)
 
-export default function StarRatingCheck({ checkRating, setCheckRating }: any) {
+export default function StarRatingCheck({
+  checkRating,
+  setCheckRating,
+}: {
+  checkRating: number;
+  setCheckRating: Dispatch<SetStateAction<number>>;
+}) {
   // Manages on Hover selection of a star
   const [selection, setSelection] = useState(0);
 

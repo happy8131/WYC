@@ -1,15 +1,5 @@
 import { Unsubscribe } from "firebase/auth";
-import {
-  collection,
-  doc,
-  getDoc,
-  limit,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
-import Image from "next/image";
+import { collection, onSnapshot, query } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -144,7 +134,7 @@ const Detail = () => {
         )}
         <h3 className="mt-3 -mb-3"> 캠핑장 어떠셨나요? </h3>
         <StarCheckContainer>
-          <StarRating postRating={checkRating} />
+          <StarRating postRating={String(checkRating)} />
         </StarCheckContainer>
         <Div>{detailDescription}</Div>
       </div>
