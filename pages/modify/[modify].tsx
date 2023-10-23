@@ -1,15 +1,5 @@
-import { Unsubscribe, updateProfile } from "firebase/auth";
-import {
-  collection,
-  doc,
-  onSnapshot,
-  orderBy,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import {
   ChangeEvent,
@@ -62,8 +52,7 @@ const StarCheckContainer = styled.div`
 const Modify = () => {
   const router = useRouter();
   const user = auth.currentUser;
-  const id = router.query.detail;
-  const [imageSrc, setImageSrc] = useState("");
+
   const [detailTitle, setDetailTitle] = useState("");
 
   const [detailPhoto, setDetailPhoto] = useState<File | null>(null);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Star = ({ starId, marked }: any) => {
+const Star = ({ starId, marked }: { starId: number; marked: boolean }) => {
   return (
     <span
       star-id={starId}
@@ -14,7 +14,7 @@ const Star = ({ starId, marked }: any) => {
 
 // Create an array of 5: Array.from({length: 5}, (v,i) => i)
 
-export default function StarRating({ postRating }: any) {
+export default function StarRating({ postRating }: { postRating: string }) {
   // Manages on Hover selection of a star
   // eslint-disable-next-line no-unused-vars
   const [selection, setSelection] = useState(0);
@@ -28,7 +28,7 @@ export default function StarRating({ postRating }: any) {
         <Star
           key={i}
           starId={i + 1}
-          marked={selection ? selection > i : rating > i}
+          marked={selection ? selection > i : Number(rating) > i}
         />
       ))}
     </div>

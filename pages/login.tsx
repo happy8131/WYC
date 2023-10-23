@@ -8,7 +8,6 @@ import Layout from "../components/layout";
 const Login = () => {
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

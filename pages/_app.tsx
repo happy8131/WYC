@@ -1,6 +1,5 @@
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
-import Layout from "../components/layout";
 import { auth } from "../firebase";
 import "../styles/globals.css";
 

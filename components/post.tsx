@@ -1,15 +1,6 @@
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from "firebase/storage";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import styled from "styled-components";
-import { auth, db, storage } from "../firebase";
+import { auth } from "../firebase";
 import { AvatarImg } from "./myPost";
 import { IPost } from "./postList";
 import StarRating from "./starRating";
