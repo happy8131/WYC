@@ -1,6 +1,4 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { auth } from "../firebase";
 import { AvatarImg } from "./myPost";
 import { IPost } from "./postList";
 import StarRating from "./starRating";
@@ -16,9 +14,6 @@ export default function Post({
   rating,
   id,
 }: IPost) {
-  const user = auth.currentUser;
-  const [photoEdit, setPhotoEdit] = useState(photo);
-  const [avatar, setAvatar] = useState(user?.photoURL);
   const router = useRouter();
 
   const onClick = () => {

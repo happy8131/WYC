@@ -106,7 +106,6 @@ const PostAdd = () => {
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [address, setAddress] = useState("");
   const user = auth.currentUser;
   const router = useRouter();
   const [isLoading, setLoading] = useState(false);

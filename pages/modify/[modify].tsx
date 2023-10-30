@@ -11,7 +11,6 @@ import {
 import styled from "styled-components";
 import Swal from "sweetalert2";
 import Layout from "../../components/layout";
-import { IPost } from "../../components/postList";
 import StarRatingCheck from "../../components/starRatingCheck";
 import { auth, db, storage } from "../../firebase";
 import { AttachFileButton, HLine, SubmitBtn, TitleContainer } from "../addPost";
@@ -60,7 +59,6 @@ const Modify = () => {
   const [docId, setDocId] = useState("");
   // 평가
   const [checkRating, setCheckRating] = useState(0);
-  const [posts, setPosts] = useState<IPost[]>([]);
   const [isLoading, setLoading] = useState(false);
 
   const onChange = async (e: ChangeEvent<HTMLInputElement>) => {
