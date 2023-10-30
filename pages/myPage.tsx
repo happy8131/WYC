@@ -69,7 +69,6 @@ const myPage = () => {
   const [nameEdit, setNameEdit] = useState<any>(user?.displayName);
   const [bEdit, setbEdit] = useState(false);
   const [docId, setDocId] = useState("");
-  const router = useRouter();
 
   const onAvatarChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
