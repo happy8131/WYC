@@ -133,6 +133,9 @@ const Signup = () => {
             {isLoading ? "로딩중..." : "회원가입"}
           </button>
         </form>
+        {error !== "" ? (
+          <span className="text-red-500 font-bold">{error}</span>
+        ) : null}
         <span className="mt-3">
           아이디가 있으신가요?{" "}
           <span
