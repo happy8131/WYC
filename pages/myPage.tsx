@@ -68,7 +68,7 @@ const myPage = () => {
   const [avatar, setAvatar] = useState(user?.photoURL);
   const [nameEdit, setNameEdit] = useState<any>(user?.displayName);
   const [bEdit, setbEdit] = useState(false);
-  const [docId, setDocId] = useState("");
+  const [, setDocId] = useState("");
 
   const onAvatarChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
