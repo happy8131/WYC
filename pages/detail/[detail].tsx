@@ -51,7 +51,7 @@ const Detail = () => {
   const [detailPhoto, setDetailPhoto] = useState("");
   const [detailDescription, setDetailDescription] = useState("");
   const [checkRating, setCheckRating] = useState(0);
-  const [posts, setPosts] = useState<IPost[]>([]);
+  const [, setPosts] = useState<IPost[]>([]);
 
   useEffect(() => {
     setDetailTitle(
