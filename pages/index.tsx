@@ -3,6 +3,8 @@ import Link from "next/link";
 import Layout from "../components/layout";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
+import { TfiArrowCircleUp } from "react-icons/tfi";
 
 const Container = styled.section`
   /* font-family: "Lato", sans-serif; */
@@ -62,7 +64,7 @@ const Picture = styled.div`
     }
   }
 
-  @media screen and (max-width: 819px) {
+  @media screen and (max-width: 820px) {
     min-height: 300px;
     height: max-content;
 
@@ -165,7 +167,7 @@ const InnerContainer = styled.div`
     }
   }
 
-  @media screen and (max-width: 819px) {
+  @media screen and (max-width: 820px) {
     width: 100%;
     margin-top: 250px;
 
@@ -185,7 +187,7 @@ const InnerContainer = styled.div`
 
         z-index: -1;
         img {
-          width: 300px;
+          width: 400px;
           height: auto;
         }
       }
@@ -217,6 +219,7 @@ const InnerContainer = styled.div`
 `;
 
 export default function Home() {
+  const router = useRouter();
   const image_1 = useRef(null);
   const image_2 = useRef(null);
   const image_3 = useRef(null);
@@ -252,9 +255,14 @@ export default function Home() {
     // }
   }, []);
 
+  const MoveToTop = () => {
+    // top:0 >> 맨위로  behavior:smooth >> 부드럽게 이동할수 있게 설정하는 속성
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <Layout>
-      <section className="flex min-h-screen items-center justify-center flex-col text-gray-600 body-font">
+      <section className="flex min-h-screen items-center justify-center body-font">
         <Container>
           <Picture>
             <div className="wrapper">
@@ -268,6 +276,12 @@ export default function Home() {
                 <p>추억에 남는 캠핑 SITE</p>
                 <p>지금 With You Camping 과 공유해요</p>
                 <p></p>
+                <span
+                  onClick={() => router.push("/campingList")}
+                  className="w-[130px] cursor-pointer text-center text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                >
+                  캠핑 후기!
+                </span>
               </div>
             </div>
           </Picture>
@@ -316,6 +330,13 @@ export default function Home() {
           </InnerContainer>
         </Container>
       </section>
+      <div className="h-full flex justify-center text-lg font-normal mb-3">
+        <TfiArrowCircleUp
+          onClick={MoveToTop}
+          className="cursor-pointer transform transition duration-500 hover:scale-125 hover:shadow-xl shadow-xl"
+          size="30"
+        />
+      </div>
     </Layout>
   );
 }
