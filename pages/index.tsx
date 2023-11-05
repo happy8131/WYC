@@ -330,7 +330,7 @@ export default function Home() {
           </InnerContainer>
         </Container>
       </section>
-      <div className="h-full flex justify-center text-lg font-normal mb-3">
+      <div className="h-full flex justify-end text-lg font-normal mb-3 mr-5">
         <TfiArrowCircleUp
           onClick={MoveToTop}
           className="cursor-pointer transform transition duration-500 hover:scale-125 hover:shadow-xl shadow-xl"
