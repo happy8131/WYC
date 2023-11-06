@@ -13,6 +13,7 @@ const Container = styled.section`
   grid-template-columns: repeat(12, 1fr);
   width: 1200px;
   /* width: 100vw; */
+  // z-index: 100;
   height: max-content;
   display: flex;
   flex-direction: column;
@@ -21,7 +22,7 @@ const Container = styled.section`
 
 const Picture = styled.div`
   position: absolute;
-
+  z-index: 10;
   display: grid;
   place-items: center;
   width: 100%;
