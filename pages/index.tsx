@@ -12,8 +12,6 @@ const Container = styled.section`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   width: 1200px;
-  /* width: 100vw; */
-  // z-index: 100;
   height: max-content;
   display: flex;
   flex-direction: column;

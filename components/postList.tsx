@@ -32,7 +32,6 @@ export interface IPost {
 const EmptyPage = styled.div`
   .size-camp {
     font-size: 500px;
-
     color: rgba(0, 0, 0, 0.1);
   }
   @media screen and (max-width: 500px) {
