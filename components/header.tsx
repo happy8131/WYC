@@ -111,7 +111,15 @@ const Header = () => {
               </div>
             ) : (
               <Link href="/login">
-                <a className="mr-5 hover:text-gray-900">로그인</a>
+                <a
+                  className={
+                    nav?.includes("/login")
+                      ? "mr-5 text-gray-900"
+                      : "mr-5 hover:text-gray-900"
+                  }
+                >
+                  로그인
+                </a>
               </Link>
             )}
           </nav>
