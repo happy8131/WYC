@@ -249,9 +249,6 @@ export default function Home() {
     io.observe(image_2.current as any);
     io.observe(image_3.current as any);
     io.observe(image_4.current as any);
-    // return () => {
-    //   io.disconnect()
-    // }
   }, []);
 
   const MoveToTop = () => {

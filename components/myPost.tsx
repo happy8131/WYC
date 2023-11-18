@@ -38,8 +38,7 @@ export default function MyPost({
   id,
 }: IPost) {
   const user = auth.currentUser;
-  const [photoEdit, setPhotoEdit] = useState(photo);
-  const [avatar, setAvatar] = useState("");
+
   const router = useRouter();
 
   const onDelete = async () => {
