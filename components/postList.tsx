@@ -193,7 +193,7 @@ export default function PostList() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen px-5 px-6 lg:mx-[100px]  mt-10">
+    <div className="flex flex-col items-center min-h-screen px-5 lg:mx-[100px]  mt-10">
       <h1 className="text-center text-2xl font-bold sm:text-5xl mb-3">
         캠핑 후기 : {posts.length}
       </h1>
