@@ -17,10 +17,10 @@ export default function Post({
   const router = useRouter();
 
   const onClick = () => {
-    sessionStorage.setItem("detailTitle", title);
-    sessionStorage.setItem("detailPhoto", photo as string);
-    sessionStorage.setItem("detailDescription", description);
-    sessionStorage.setItem("myRating", rating);
+    localStorage.setItem("detailTitle", title);
+    localStorage.setItem("detailPhoto", photo as string);
+    localStorage.setItem("detailDescription", description);
+    localStorage.setItem("myRating", rating);
     router.push(`/detail/${id}`);
   };
 

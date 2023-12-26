@@ -90,15 +90,15 @@ const Modify = () => {
   };
 
   useEffect(() => {
-    setDetailTitle(sessionStorage.getItem("myTitle") as SetStateAction<string>);
+    setDetailTitle(localStorage.getItem("myTitle") as SetStateAction<string>);
     setDetailPhoto(
-      sessionStorage.getItem("myPhoto") as SetStateAction<File | null>
+      localStorage.getItem("myPhoto") as SetStateAction<File | null>
     );
     setDetailDescription(
-      sessionStorage.getItem("myDescription") as SetStateAction<string>
+      localStorage.getItem("myDescription") as SetStateAction<string>
     );
-    setDocId(sessionStorage.getItem("idDoc") as SetStateAction<string>);
-    setCheckRating(sessionStorage.getItem("myRating") as any);
+    setDocId(localStorage.getItem("idDoc") as SetStateAction<string>);
+    setCheckRating(localStorage.getItem("myRating") as any);
   }, []);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {

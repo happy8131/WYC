@@ -63,7 +63,6 @@ const Signup = () => {
       });
       router.push("/");
     } catch (e: any) {
-      console.log("회원가입err", e);
       if (e instanceof FirebaseError) {
         setError(e.message);
       }

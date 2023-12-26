@@ -55,15 +55,15 @@ const Detail = () => {
 
   useEffect(() => {
     setDetailTitle(
-      sessionStorage.getItem("detailTitle") as SetStateAction<string>
+      localStorage.getItem("detailTitle") as SetStateAction<string>
     );
     setDetailPhoto(
-      sessionStorage.getItem("detailPhoto") as SetStateAction<string>
+      localStorage.getItem("detailPhoto") as SetStateAction<string>
     );
     setDetailDescription(
-      sessionStorage.getItem("detailDescription") as SetStateAction<string>
+      localStorage.getItem("detailDescription") as SetStateAction<string>
     );
-    setCheckRating(sessionStorage.getItem("myRating") as any);
+    setCheckRating(localStorage.getItem("myRating") as any);
     let unsubscribe: Unsubscribe | null = null;
     if (!user) return;
     const fetchPosts = async () => {
