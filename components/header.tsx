@@ -22,6 +22,15 @@ const Header = () => {
       cancelButtonText: "취소",
     }).then(async (res) => {
       if (res.isConfirmed) {
+        localStorage.removeItem("myTitle");
+        localStorage.removeItem("myPhoto");
+        localStorage.removeItem("myDescription");
+        localStorage.removeItem("idDoc");
+        localStorage.removeItem("myRating");
+        localStorage.removeItem("detailTitle");
+        localStorage.removeItem("detailPhoto");
+        localStorage.removeItem("detailDescription");
+        localStorage.removeItem("myRating");
         await auth.signOut();
         router.push("/");
       }

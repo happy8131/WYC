@@ -67,11 +67,11 @@ export default function MyPost({
   };
 
   const onClick = () => {
-    sessionStorage.setItem("myTitle", title);
-    sessionStorage.setItem("myPhoto", photo as string);
-    sessionStorage.setItem("myDescription", description);
-    sessionStorage.setItem("idDoc", id);
-    sessionStorage.setItem("myRating", rating);
+    localStorage.setItem("myTitle", title);
+    localStorage.setItem("myPhoto", photo as string);
+    localStorage.setItem("myDescription", description);
+    localStorage.setItem("idDoc", id);
+    localStorage.setItem("myRating", rating);
     router.push(`/modify/${id}`);
   };
 
