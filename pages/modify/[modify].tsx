@@ -17,12 +17,12 @@ import { AttachFileButton, HLine, SubmitBtn, TitleContainer } from "../addPost";
 
 export const Textea = styled.textarea`
   margin-top: 2.5rem;
-  border: 2px solid white;
+  border: 2px solid black;
   padding: 20px;
   border-radius: 20px;
   font-size: 16px;
-  color: white;
-  background-color: #dac2c2;
+  color: black;
+  background-color: #f0ecec;
   width: 50%;
   height: 300px;
 

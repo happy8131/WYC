@@ -12,12 +12,12 @@ import { HLine, TextArea, TitleContainer } from "../addPost";
 export const Div = styled.div`
   margin-top: 1rem;
   margin-bottom: 1rem;
-  border: 2px solid white;
+  border: 2px solid black;
   padding: 20px;
   border-radius: 20px;
   font-size: 16px;
-  color: white;
-  background-color: #dac2c2;
+  color: black;
+  background-color: #f0ecec;
   width: 50%;
   height: 300px;
 
