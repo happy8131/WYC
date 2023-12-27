@@ -25,7 +25,7 @@ export default function StarRatingCheck({
   const [selection, setSelection] = useState(0);
 
   // 별점 props로 받아 해당 별점 업데이트
-  const [rating, setRating] = useState(checkRating);
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     setCheckRating(rating);
@@ -52,7 +52,7 @@ export default function StarRatingCheck({
         <Star
           key={i}
           starId={i + 1}
-          marked={selection ? selection > i : rating > i}
+          marked={selection ? selection > i : checkRating > i}
         />
       ))}
     </div>
