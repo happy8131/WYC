@@ -207,7 +207,7 @@ const PostAdd = () => {
     <Layout>
       <form
         onSubmit={onSubmit}
-        className="flex flex-col items-center text-center min-h-screen "
+        className="flex flex-col items-center text-center min-h-screen"
       >
         <h1 className="mt-10 font-bold text-[30px]">게시글 작성</h1>
         <HLine />
@@ -244,7 +244,7 @@ const PostAdd = () => {
           maxLength={180}
           placeholder="후기글"
         />
-        <h3 className="mt-5"> 캠핑장 어떠셨나요? </h3>
+        <h3 className="mt-5">캠핑장 어떠셨나요?</h3>
         <StarCheckContainer>
           <StarRatingCheck
             checkRating={checkRating}
