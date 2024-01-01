@@ -168,8 +168,6 @@ const myPage = () => {
     } catch (err) {
       console.log(err);
     }
-
-    //  router.reload();
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {

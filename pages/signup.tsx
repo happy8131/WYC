@@ -66,7 +66,6 @@ const Signup = () => {
       if (e instanceof FirebaseError) {
         setError(e.message);
       }
-      //   setError(e);
     } finally {
       setLoading(false);
     }
