@@ -1,7 +1,6 @@
 import { deleteDoc, doc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import styled from "styled-components";
 import { auth, db, storage } from "../firebase";
 import { IPost } from "./postList";
