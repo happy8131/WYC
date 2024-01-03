@@ -15,7 +15,6 @@ import { auth, db, storage } from "../firebase";
 import MyPost from "../components/myPost";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 import Layout from "../components/layout";
 import Swal from "sweetalert2";
 import { GiCampingTent } from "react-icons/gi";

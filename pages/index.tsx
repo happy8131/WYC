@@ -1,5 +1,3 @@
-import Animation from "../components/home/animation";
-import Link from "next/link";
 import Layout from "../components/layout";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
