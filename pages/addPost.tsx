@@ -56,10 +56,8 @@ export const TitleContainer = styled.section`
 export const HLine = styled.div`
   display: block;
   margin-bottom: 50px;
-
   width: 100%;
   height: 1px;
-
   background-color: #aaa;
 `;
 
