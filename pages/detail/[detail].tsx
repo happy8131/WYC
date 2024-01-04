@@ -20,7 +20,6 @@ export const Div = styled.div`
   background-color: #f0ecec;
   width: 50%;
   height: 300px;
-
   resize: none;
   text-align: left;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,

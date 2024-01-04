@@ -25,7 +25,6 @@ export const Textea = styled.textarea`
   background-color: #f0ecec;
   width: 50%;
   height: 300px;
-
   resize: none;
   text-align: left;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
